@@ -30,7 +30,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;

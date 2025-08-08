@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:listatarefa1/app/utils/theme/theme.dart';
 
 void main() {
-    Get.put(AuthController());
+  Get.put(AuthController());
   Get.put(TaskController());
   runApp(const ListTarefa());
 }
@@ -25,8 +25,8 @@ class _ListTarefa extends State<ListTarefa> {
     return SafeArea(
       child: GetMaterialApp(
         theme: TAppTheme.lightTheme,
-      darkTheme: TAppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+        darkTheme: TAppTheme.darkTheme,
+        themeMode: ThemeMode.system,
         home: const HomePage(),
       ),
     );

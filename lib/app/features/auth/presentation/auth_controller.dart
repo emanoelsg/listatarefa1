@@ -6,7 +6,6 @@ class AuthController extends GetxController {
   Rxn<UserEntity> user = Rxn<UserEntity>();
   final _isLoading = false.obs;
 
-
   bool get isLoading => _isLoading.value;
 
   Future<void> loginWithEmail(String email, String password) async {
@@ -17,6 +16,7 @@ class AuthController extends GetxController {
       _isLoading.value = false;
     }
   }
+
   Future<void> signUp(String name, String email, String password) async {
     _isLoading.value = true;
     try {
@@ -31,12 +31,11 @@ class AuthController extends GetxController {
       _isLoading.value = false;
     }
   }
+
   void signOut() {
     user.value = null;
     Get.offAllNamed('/login');
   }
- 
+
   bool get isLoggedIn => user.value != null;
-
-
 }

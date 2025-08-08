@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:listatarefa1/app/utils/constants/sizes.dart';
 import 'package:listatarefa1/app/utils/validators/validation.dart';
 
-
 class SignUpForm extends StatelessWidget {
   const SignUpForm({
     super.key,

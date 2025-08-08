@@ -2,12 +2,10 @@
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/tasks/domain/task_entity.dart';
 
-
 class TaskController extends GetxController {
   var tasks = <TaskEntity>[].obs;
- 
 
-   void addTask(String title) {
+  void addTask(String title) {
     final task = TaskEntity(
       id: DateTime.now().toString(),
       title: title,

@@ -16,9 +16,9 @@ class FormContainer extends StatelessWidget {
     required TextEditingController loginEmailController,
     required TextEditingController loginPasswordController,
     required this.authController,
-  }) : _formKey = formKey,
-       _loginEmailController = loginEmailController,
-       _loginPasswordController = loginPasswordController;
+  })  : _formKey = formKey,
+        _loginEmailController = loginEmailController,
+        _loginPasswordController = loginPasswordController;
 
   final GlobalKey<FormState> _formKey;
   final TextEditingController _loginEmailController;

@@ -2,11 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
 class THelperFunctions {
-
-    static void showSnackBar(String message) {
+  static void showSnackBar(String message) {
     Get.snackbar(
       'Aviso',
       message,
@@ -15,7 +12,8 @@ class THelperFunctions {
       colorText: Colors.white,
     );
   }
-    static void navigateToScreen(BuildContext context, Widget screen) {
+
+  static void navigateToScreen(BuildContext context, Widget screen) {
     Get.to(() => screen);
   }
 

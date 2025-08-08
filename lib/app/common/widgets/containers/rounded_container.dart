@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:listatarefa1/app/utils/constants/colors.dart';
 import 'package:listatarefa1/app/utils/constants/sizes.dart';
 
-
 /// A container widget with rounded corners and customizable properties.
 class TRoundedContainer extends StatelessWidget {
   /// Create a rounded container with customizable properties.

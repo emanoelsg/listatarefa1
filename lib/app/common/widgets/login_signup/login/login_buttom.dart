@@ -11,7 +11,9 @@ class LoginButtom extends StatelessWidget {
     required GlobalKey<FormState> formKey,
     required TextEditingController loginEmailController,
     required TextEditingController loginPasswordController,
-  }) : _formKey = formKey, _loginEmailController = loginEmailController, _loginPasswordController = loginPasswordController;
+  })  : _formKey = formKey,
+        _loginEmailController = loginEmailController,
+        _loginPasswordController = loginPasswordController;
 
   final AuthController authController;
   final GlobalKey<FormState> _formKey;
@@ -38,7 +40,7 @@ class LoginButtom extends StatelessWidget {
                 if (_formKey.currentState!.validate()) {
                   // continuar com o fluxo de registro
                   authController.loginWithEmail(
-                     _loginEmailController.text,
+                    _loginEmailController.text,
                     _loginPasswordController.text,
                   );
                 }

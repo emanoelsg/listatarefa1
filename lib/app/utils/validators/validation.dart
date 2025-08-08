@@ -1,6 +1,5 @@
 // app/utils/validators/validation.dart
 
-
 /// VALIDATION CLASS
 class TValidator {
   /// Empty Text Validation
@@ -29,7 +28,10 @@ class TValidator {
 
     // Check if the username doesn't start or end with an underscore or hyphen.
     if (isValid) {
-      isValid = !username.startsWith('_') && !username.startsWith('-') && !username.endsWith('_') && !username.endsWith('-');
+      isValid = !username.startsWith('_') &&
+          !username.startsWith('-') &&
+          !username.endsWith('_') &&
+          !username.endsWith('-');
     }
 
     if (!isValid) {
@@ -99,6 +101,7 @@ class TValidator {
 
     return null;
   }
+
   static String? validateConfirmPassword({
     required String? password,
     required String? confirmPassword,

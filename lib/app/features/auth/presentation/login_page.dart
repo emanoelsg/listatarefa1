@@ -46,7 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: MediaQuery.of(context).size.height * 0.07),
-
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -73,7 +72,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-
                 FormContainer(
                   formKey: _formKey,
                   loginEmailController: _loginEmailController,

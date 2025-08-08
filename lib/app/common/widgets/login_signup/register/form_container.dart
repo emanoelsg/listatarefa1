@@ -10,7 +10,6 @@ import 'package:listatarefa1/app/utils/constants/sizes.dart';
 import 'package:listatarefa1/app/utils/helpers/helper_functions.dart';
 import '../form_divider.dart';
 
-
 class BuildFormContainer extends StatelessWidget {
   const BuildFormContainer({
     super.key,
@@ -75,7 +74,7 @@ class BuildFormContainer extends StatelessWidget {
             const SizedBox(height: 48),
 
             const TFormDivider(dividerText: 'Or'),
-            
+
             const SizedBox(height: TSizes.defaultSpace),
 
             SizedBox(height: screenHeight * 0.05),

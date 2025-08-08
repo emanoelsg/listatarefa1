@@ -1,3 +1,4 @@
+// app/features/auth/domain/auth_repository.dart
 import 'user_entity.dart';
 
 abstract class AuthRepository {

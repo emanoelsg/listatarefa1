@@ -1,3 +1,4 @@
+// app/features/tasks/domain/task_entity.dart
 class TaskEntity {
   final String id;
   final String title;

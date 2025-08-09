@@ -74,7 +74,7 @@ class FormContainer extends StatelessWidget {
                   onPressed: () {
                     THelperFunctions.navigateToScreen(
                       context,
-                      const RegisterScreen(),
+                      const RegisterPage(),
                     );
                   },
                   child: const Text('Sign Up'),

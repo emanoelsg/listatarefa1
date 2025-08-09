@@ -1,8 +1,14 @@
 // app/features/auth/presentation/auth_controller.dart
 import 'package:get/get.dart';
+import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
 
 class AuthController extends GetxController {
+  final AuthRepository _repository;
+
+  AuthController({required AuthRepository repository})
+      : _repository = repository;
+
   Rxn<UserEntity> user = Rxn<UserEntity>();
   final _isLoading = false.obs;
 
@@ -11,7 +17,15 @@ class AuthController extends GetxController {
   Future<void> loginWithEmail(String email, String password) async {
     _isLoading.value = true;
     try {
-      // Implementar login
+      final result = await _repository.signIn(email, password);
+      if (result != null) {
+        user.value = result;
+        Get.offAllNamed('/home');
+      } else {
+        Get.snackbar('Erro', 'Credenciais inválidas');
+      }
+    } catch (e) {
+      Get.snackbar('Erro', 'Falha ao fazer login');
     } finally {
       _isLoading.value = false;
     }
@@ -20,19 +34,20 @@ class AuthController extends GetxController {
   Future<void> signUp(String name, String email, String password) async {
     _isLoading.value = true;
     try {
-      // Aqui você pode implementar a lógica de cadastro (ex: Firebase Auth)
-      // Exemplo temporário:
-      user.value = UserEntity(id: '1', email: email);
-      Get.offAllNamed('/home');
-    } catch (e) {
-      // Trate o erro conforme necessário
-      Get.snackbar('Erro', 'Falha ao registrar usuário');
+      final result = await _repository.signUp(email, password);
+      if (result != null) {
+        user.value = result;
+        Get.offAllNamed('/home');
+      } else {
+        Get.snackbar('Erro', 'Falha ao registrar usuário');
+      }
     } finally {
       _isLoading.value = false;
     }
   }
 
-  void signOut() {
+  Future<void> signOut() async {
+    await _repository.signOut();
     user.value = null;
     Get.offAllNamed('/login');
   }

@@ -6,15 +6,15 @@ import 'package:listatarefa1/app/common/widgets/login_signup/register/form_conta
 import 'package:listatarefa1/app/common/widgets/login_signup/register/register_header.dart';
 import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
-  final authController = Get.put(AuthController());
+class _RegisterPageState extends State<RegisterPage> {
+  final authController = Get.find<AuthController>();
   final formKey = GlobalKey<FormState>();
   final confirmPasswordController = TextEditingController();
   final signUpEmailController = TextEditingController();

@@ -1,4 +1,7 @@
+// app/features/tasks/presentation/tasks_page.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'task_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -8,135 +11,65 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Lista compartilhada de tarefas
-  final List<String> tasks = [];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: Column(children: [
-          ListTile(
-            title: Text('listTile'),
-          ),
-          Divider(
-            height: 10,
-            thickness: 3,
-          ),
-          Card(
-            child: ListTile(
-              title: Text(
-                'listTile',
-              ),
-            ),
-          ),
-          Card(
-            child: ListTile(
-              title: Text(
-                'listTile',
-              ),
-            ),
-          ),
-        ]),
-      ),
-      // Botão flutuante para adicionar tarefas
-      floatingActionButton: FloatingActionButton.large(
-        onPressed: addList, // Chama a função que adiciona uma nova tarefa
-        child: const Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: const Text('Lista de Tarefa'), // Título da aplicação
-      ),
-      // Passa a lista de tarefas para o widget filho
-      body: AddList(tasks: tasks),
-    );
-  }
-
-  // Função que adiciona uma nova tarefa à lista
-  void addList() {
-    setState(() {
-      tasks.add(
-          'Lista ${tasks.length + 1}'); // Adiciona uma nova tarefa numerada
-    });
-  }
-}
-
-class AddList extends StatefulWidget {
-  // Recebe a lista de tarefas do componente pai
-  final List<String> tasks;
-
-  const AddList({super.key, required this.tasks});
-
-  @override
-  State<AddList> createState() => _AddListState();
-}
-
-class _AddListState extends State<AddList> {
-  // Variável que controla o estado do checkbox
-  List<bool> _isChecked = [];
+  late final TaskController controller;
+  late final String userId;
 
   @override
   void initState() {
     super.initState();
-    // Inicializar a lista de booleanos com o mesmo tamanho da lista de tarefas
-    _isChecked = List<bool>.filled(widget.tasks.length, false);
-  }
-
-  // Função que remove uma tarefa da lista pelo índice
-  void deleteList(index) {
-    setState(() {
-      widget.tasks.removeAt(index);
-    });
+    controller = Get.find<TaskController>();
+    userId = Get.find<String>(tag: 'userId');
+    controller.loadTasks(userId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      // Define a quantidade de itens na lista
-      itemCount: widget.tasks.length,
-      itemBuilder: (context, index) {
-        return Padding(
-          // Espaçamento entre os itens
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-          child: Container(
-            // Decoração do container
-            decoration: BoxDecoration(
-              color: Colors.indigoAccent[300],
-            ),
-            child: Card(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Lista de Tarefa'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await controller.addTask(userId, 'Nova tarefa');
+        },
+        child: const Icon(Icons.add),
+      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.tasks.isEmpty) {
+          return const Center(child: Text('Nenhuma tarefa encontrada'));
+        }
+
+        return ListView.builder(
+          itemCount: controller.tasks.length,
+          itemBuilder: (context, index) {
+            final task = controller.tasks[index];
+            return Card(
               child: ListTile(
-                // Checkbox para marcar/desmarcar a tarefa
                 leading: Checkbox(
-                  value: _isChecked[index],
-                  onChanged: (newBool) {
-                    setState(() {
-                      _isChecked[index] =
-                          newBool!; // Atualiza o estado do checkbox
-                    });
+                  value: task.isDone,
+                  onChanged: (value) {
+                    controller.updateTask(
+                      userId,
+                      task.copyWith(isDone: value ?? false),
+                    );
                   },
                 ),
-                dense: false, // Reduz o espaçamento interno do ListTile
-                // Ícone para deletar a tarefa
+                title: Text(task.title),
                 trailing: IconButton(
-                  iconSize: 40.0, // Tamanho do ícone
-                  onPressed: () {
-                    deleteList(index); // Remove a tarefa ao clicar no ícone
-                  },
                   icon: const Icon(Icons.delete),
-                ),
-                // Campo de texto para editar a tarefa
-                title: const TextField(
-                  decoration: InputDecoration(
-                    labelStyle:
-                        TextStyle(fontSize: 13.0), // Estilo do texto do rótulo
-                    labelText: ('tarefa'), // Texto do rótulo
-                  ),
+                  onPressed: () {
+                    controller.deleteTask(userId, task.id);
+                  },
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
-      },
+      }),
     );
   }
 }

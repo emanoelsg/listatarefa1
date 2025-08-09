@@ -87,7 +87,7 @@ class BuildFormContainer extends StatelessWidget {
                   onPressed: () {
                     THelperFunctions.navigateToScreen(
                       context,
-                      const LoginScreen(),
+                      const LoginPage(),
                     );
                   },
                   child: const Text('Login'),

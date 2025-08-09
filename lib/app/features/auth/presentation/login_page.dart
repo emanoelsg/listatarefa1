@@ -5,15 +5,15 @@ import 'package:get/instance_manager.dart';
 import 'package:listatarefa1/app/common/widgets/login_signup/login/form_container.dart';
 import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final authController = Get.put(AuthController());
+class _LoginPageState extends State<LoginPage> {
+  final authController = Get.find<AuthController>();
 
   final _formKey = GlobalKey<FormState>();
   // Login Controllers

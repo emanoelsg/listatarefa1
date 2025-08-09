@@ -16,7 +16,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
-        coreLibraryDesugaringEnabled = true // ✅ Ativa o desugaring
+        coreLibraryDesugaringEnabled = true 
     }
 
     kotlinOptions {
@@ -25,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "com.emanoelsg.listatarefa1"
-        minSdk = 23
+        minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
@@ -41,7 +41,11 @@ android {
 flutter {
     source = "../.."
 }
+apply plugin: 'com.google.gms.google-services'
 
 dependencies {
     implementation 'com.android.tools:desugar_jdk_libs:2.0.4' 
+    implementation platform('com.google.firebase:firebase-bom:32.7.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 }

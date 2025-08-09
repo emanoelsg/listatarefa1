@@ -12,8 +12,6 @@ class TaskController extends GetxController {
   var tasks = <TaskEntity>[].obs;
   var isLoading = false.obs;
 
-
-
   Future<void> loadTasks(String userId) async {
     try {
       isLoading.value = true;

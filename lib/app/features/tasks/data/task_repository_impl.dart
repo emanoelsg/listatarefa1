@@ -8,8 +8,7 @@ class TaskRepositoryImpl implements TaskRepository {
   TaskRepositoryImpl({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
-  CollectionReference get _col =>
-      _firestore.collection('tasks');
+  CollectionReference get _col => _firestore.collection('tasks');
 
   @override
   Future<List<TaskEntity>> getTasks(String userId) async {
@@ -19,7 +18,8 @@ class TaskRepositoryImpl implements TaskRepository {
         .get();
 
     return snapshot.docs
-        .map((doc) => TaskEntity.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) =>
+            TaskEntity.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
   }
 

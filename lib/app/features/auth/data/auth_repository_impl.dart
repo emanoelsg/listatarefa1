@@ -8,7 +8,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<UserEntity?> signIn(String email, String password) async {
-    final credential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    final credential = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
     final user = credential.user;
     if (user != null) {
       return UserEntity(id: user.uid, email: user.email ?? '');
@@ -18,7 +19,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<UserEntity?> signUp(String email, String password) async {
-    final credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+    final credential = await _auth.createUserWithEmailAndPassword(
+        email: email, password: password);
     final user = credential.user;
     if (user != null) {
       return UserEntity(id: user.uid, email: user.email ?? '');

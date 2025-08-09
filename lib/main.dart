@@ -22,7 +22,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
   const initSettings = InitializationSettings(android: androidInit);
   await flutterLocalNotificationsPlugin.initialize(initSettings);
@@ -55,8 +55,8 @@ class _ListTarefa extends State<ListTarefa> {
         darkTheme: TAppTheme.darkTheme,
         themeMode: ThemeMode.system,
         home: FirebaseAuth.instance.currentUser != null
-    ? const HomePage()
-    : const LoginPage(), 
+            ? const HomePage()
+            : const LoginPage(),
       ),
     );
   }

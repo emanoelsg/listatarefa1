@@ -4,8 +4,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+        //coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
         classpath 'com.android.tools.build:gradle:8.3.0'
+        classpath 'com.google.gms:google-services:4.4.1'
     }
 }
 

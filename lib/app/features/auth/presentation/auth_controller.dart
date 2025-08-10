@@ -2,6 +2,8 @@
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
+import 'package:listatarefa1/app/features/auth/presentation/login_page.dart';
+import 'package:listatarefa1/app/features/tasks/presentation/tasks_page.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _repository;
@@ -20,7 +22,7 @@ class AuthController extends GetxController {
       final result = await _repository.signIn(email, password);
       if (result != null) {
         user.value = result;
-        Get.offAllNamed('/home');
+        Get.off(HomePage());
       } else {
         Get.snackbar('Erro', 'Credenciais inválidas');
       }
@@ -37,7 +39,7 @@ class AuthController extends GetxController {
       final result = await _repository.signUp(email, password);
       if (result != null) {
         user.value = result;
-        Get.offAllNamed('/home');
+        Get.off(HomePage());
       } else {
         Get.snackbar('Erro', 'Falha ao registrar usuário');
       }
@@ -49,7 +51,7 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     await _repository.signOut();
     user.value = null;
-    Get.offAllNamed('/login');
+    Get.off(LoginPage());
   }
 
   bool get isLoggedIn => user.value != null;

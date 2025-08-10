@@ -1,4 +1,4 @@
-// app/main.dart
+// main.dart
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,20 +12,12 @@ import 'package:get/get.dart';
 import 'package:listatarefa1/app/utils/theme/theme.dart';
 import 'package:listatarefa1/firebase_options.dart';
 
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
-  const initSettings = InitializationSettings(android: androidInit);
-  await flutterLocalNotificationsPlugin.initialize(initSettings);
 
   Get.put(AuthController(repository: AuthRepositoryImpl()));
   Get.put(TaskController(repository: TaskRepositoryImpl()));

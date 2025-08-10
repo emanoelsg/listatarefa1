@@ -4,37 +4,57 @@ import '../domain/task_entity.dart';
 import '../domain/task_repository.dart';
 
 class TaskRepositoryImpl implements TaskRepository {
-  final FirebaseFirestore _firestore;
-  TaskRepositoryImpl({FirebaseFirestore? firestore})
-      : _firestore = firestore ?? FirebaseFirestore.instance;
-
-  CollectionReference get _col => _firestore.collection('tasks');
+  final _firestore = FirebaseFirestore.instance;
 
   @override
   Future<List<TaskEntity>> getTasks(String userId) async {
-    final snapshot = await _col
-        .where('userId', isEqualTo: userId)
-        .orderBy('createdAt', descending: true)
+    final snapshot = await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
         .get();
 
     return snapshot.docs
-        .map((doc) =>
-            TaskEntity.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .map((doc) => TaskEntity(
+              id: doc.id,
+              title: doc['title'],
+              isDone: doc['isDone'] ?? false, userId: '', createdAt: DateTime.now(),
+            ))
         .toList();
   }
 
   @override
   Future<void> addTask(String userId, TaskEntity task) async {
-    await _col.add(task.toMap());
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
+        .add({
+      'title': task.title,
+      'isDone': task.isDone,
+    });
   }
 
   @override
   Future<void> updateTask(String userId, TaskEntity task) async {
-    await _col.doc(task.id).update(task.toMap());
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
+        .doc(task.id)
+        .update({
+      'title': task.title,
+      'isDone': task.isDone,
+    });
   }
 
   @override
   Future<void> deleteTask(String userId, String taskId) async {
-    await _col.doc(taskId).delete();
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
+        .doc(taskId)
+        .delete();
   }
 }

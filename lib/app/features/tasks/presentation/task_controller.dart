@@ -1,5 +1,6 @@
 // app/features/tasks/presentation/task_controller.dart
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 import '../domain/task_entity.dart';
 import '../domain/task_repository.dart';
 
@@ -9,15 +10,16 @@ class TaskController extends GetxController {
   TaskController({required TaskRepository repository})
       : _repository = repository;
 
-  var tasks = <TaskEntity>[].obs;
-  var isLoading = false.obs;
+  final tasks = <TaskEntity>[].obs;
+  final isLoading = false.obs;
+  final message = RxnString();
 
   Future<void> loadTasks(String userId) async {
     try {
       isLoading.value = true;
       tasks.value = await _repository.getTasks(userId);
     } catch (e) {
-      Get.snackbar('Erro', 'Não foi possível carregar tarefas');
+      message.value = 'Erro ao carregar tarefas';
     } finally {
       isLoading.value = false;
     }
@@ -25,7 +27,7 @@ class TaskController extends GetxController {
 
   Future<void> addTask(String userId, String title) async {
     final task = TaskEntity(
-      id: '',
+      id: const Uuid().v4(),
       title: title,
       userId: userId,
       createdAt: DateTime.now(),
@@ -33,18 +35,22 @@ class TaskController extends GetxController {
     try {
       await _repository.addTask(userId, task);
       await loadTasks(userId);
-      Get.snackbar('Sucesso', 'Tarefa adicionada');
+      message.value = 'Tarefa adicionada com sucesso';
     } catch (e) {
-      Get.snackbar('Erro', 'Falha ao adicionar tarefa');
+      message.value = 'Erro ao adicionar tarefa';
     }
   }
 
   Future<void> updateTask(String userId, TaskEntity task) async {
     try {
       await _repository.updateTask(userId, task);
-      tasks[tasks.indexWhere((t) => t.id == task.id)] = task;
+      final index = tasks.indexWhere((t) => t.id == task.id);
+      if (index != -1) {
+        tasks[index] = task;
+      }
+      message.value = 'Tarefa atualizada';
     } catch (e) {
-      Get.snackbar('Erro', 'Falha ao atualizar tarefa');
+      message.value = 'Erro ao atualizar tarefa';
     }
   }
 
@@ -52,8 +58,9 @@ class TaskController extends GetxController {
     try {
       await _repository.deleteTask(userId, taskId);
       tasks.removeWhere((t) => t.id == taskId);
+      message.value = 'Tarefa excluída';
     } catch (e) {
-      Get.snackbar('Erro', 'Falha ao excluir tarefa');
+      message.value = 'Erro ao excluir tarefa';
     }
   }
 }

@@ -15,8 +15,8 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final authController = Get.find<AuthController>();
-  final formKey = GlobalKey<FormState>();
   final confirmPasswordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
   final signUpEmailController = TextEditingController();
   final signUpNameController = TextEditingController();
   final signUpPasswordController = TextEditingController();

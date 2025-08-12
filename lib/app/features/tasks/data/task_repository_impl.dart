@@ -4,7 +4,10 @@ import '../domain/task_entity.dart';
 import '../domain/task_repository.dart';
 
 class TaskRepositoryImpl implements TaskRepository {
-  final _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firestore;
+
+  TaskRepositoryImpl({FirebaseFirestore? firestore})
+      : _firestore = firestore ?? FirebaseFirestore.instance;
 
   @override
   Future<List<TaskEntity>> getTasks(String userId) async {
@@ -18,20 +21,21 @@ class TaskRepositoryImpl implements TaskRepository {
         .map((doc) => TaskEntity(
               id: doc.id,
               title: doc['title'],
-              isDone: doc['isDone'] ?? false, userId: '', createdAt: DateTime.now(),
+              isDone: doc['isDone'] ?? false,
+              userId: userId,
+              createdAt: doc['createdAt'] != null
+                  ? DateTime.tryParse(doc['createdAt']) ?? DateTime.now()
+                  : DateTime.now(),
             ))
         .toList();
   }
 
   @override
   Future<void> addTask(String userId, TaskEntity task) async {
-    await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('tasks')
-        .add({
+    await _firestore.collection('users').doc(userId).collection('tasks').add({
       'title': task.title,
       'isDone': task.isDone,
+      'createdAt': task.createdAt.toIso8601String(),
     });
   }
 

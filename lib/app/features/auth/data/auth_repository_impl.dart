@@ -6,7 +6,8 @@ import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final FirebaseAuth _auth;
 
-  AuthRepositoryImpl({FirebaseAuth? auth}) : _auth = auth ?? FirebaseAuth.instance;
+  AuthRepositoryImpl({FirebaseAuth? auth})
+      : _auth = auth ?? FirebaseAuth.instance;
 
   @override
   Future<UserEntity?> signIn(String email, String password) async {

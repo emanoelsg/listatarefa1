@@ -13,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:listatarefa1/app/utils/theme/theme.dart';
 import 'package:listatarefa1/firebase_options.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -41,7 +40,6 @@ class ListTarefa extends StatefulWidget {
 }
 
 class _ListTarefa extends State<ListTarefa> {
-  
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -28,6 +28,7 @@ class LoginButtom extends StatelessWidget {
               color: Colors.deepPurple,
             )
           : ElevatedButton(
+              key: const Key('login_button'),
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),

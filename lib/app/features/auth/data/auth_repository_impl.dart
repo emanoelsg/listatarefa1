@@ -4,26 +4,43 @@ import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
+
+  AuthRepositoryImpl({FirebaseAuth? auth}) : _auth = auth ?? FirebaseAuth.instance;
 
   @override
   Future<UserEntity?> signIn(String email, String password) async {
     final credential = await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
     final user = credential.user;
     if (user != null) {
-      return UserEntity(id: user.uid, email: user.email ?? '');
+      return UserEntity(
+        id: user.uid,
+        email: user.email ?? '',
+        name: user.displayName ?? '',
+      );
     }
     return null;
   }
 
   @override
-  Future<UserEntity?> signUp(String email, String password) async {
+  Future<UserEntity?> signUp(String name, String email, String password) async {
     final credential = await _auth.createUserWithEmailAndPassword(
-        email: email, password: password);
+      email: email,
+      password: password,
+    );
     final user = credential.user;
     if (user != null) {
-      return UserEntity(id: user.uid, email: user.email ?? '');
+      await user.updateDisplayName(name);
+      await user.reload(); // Atualiza localmente
+      final updatedUser = _auth.currentUser;
+      return UserEntity(
+        id: updatedUser!.uid,
+        email: updatedUser.email ?? '',
+        name: updatedUser.displayName ?? '',
+      );
     }
     return null;
   }
@@ -37,7 +54,11 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<UserEntity?> getCurrentUser() async {
     final user = _auth.currentUser;
     if (user != null) {
-      return UserEntity(id: user.uid, email: user.email ?? '');
+      return UserEntity(
+        id: user.uid,
+        email: user.email ?? '',
+        name: user.displayName ?? '',
+      );
     }
     return null;
   }

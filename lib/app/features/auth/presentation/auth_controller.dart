@@ -1,4 +1,5 @@
 // app/features/auth/presentation/auth_controller.dart
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
@@ -7,14 +8,34 @@ import 'package:listatarefa1/app/features/tasks/presentation/tasks_page.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _repository;
+  final void Function(String title, String message)? onError;
 
-  AuthController({required AuthRepository repository})
-      : _repository = repository;
+  AuthController({
+    required AuthRepository repository,
+    this.onError,
+  }) : _repository = repository;
 
-  Rxn<UserEntity> user = Rxn<UserEntity>();
-  final _isLoading = false.obs;
+  final Rxn<UserEntity> user = Rxn<UserEntity>();
+  final RxBool _isLoading = false.obs;
 
   bool get isLoading => _isLoading.value;
+  bool get isLoggedIn => user.value != null;
+
+  void _showError(String message) {
+    if (Get.testMode && onError != null) {
+      onError!("Erro", message);
+      return;
+    }
+
+    Get.snackbar(
+      'Erro',
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.redAccent,
+      colorText: Colors.white,
+      duration: Duration(seconds: 3),
+    );
+  }
 
   Future<void> loginWithEmail(String email, String password) async {
     _isLoading.value = true;
@@ -22,12 +43,13 @@ class AuthController extends GetxController {
       final result = await _repository.signIn(email, password);
       if (result != null) {
         user.value = result;
-        Get.off(HomePage());
+        Get.off(() => HomePage());
       } else {
-        Get.snackbar('Erro', 'Credenciais inválidas');
+        _showError('Credenciais inválidas');
       }
     } catch (e) {
-      Get.snackbar('Erro', 'Falha ao fazer login');
+      _showError('Falha ao fazer login');
+      debugPrint('Login error: $e');
     } finally {
       _isLoading.value = false;
     }
@@ -36,13 +58,16 @@ class AuthController extends GetxController {
   Future<void> signUp(String name, String email, String password) async {
     _isLoading.value = true;
     try {
-      final result = await _repository.signUp(email, password);
+      final result = await _repository.signUp(name, email, password);
       if (result != null) {
-        user.value = result;
-        Get.off(HomePage());
+        user.value = UserEntity(id: result.id, email: result.email, name: name);
+        Get.off(() => HomePage());
       } else {
-        Get.snackbar('Erro', 'Falha ao registrar usuário');
+        _showError('Falha ao registrar usuário');
       }
+    } catch (e) {
+      _showError('Erro inesperado ao registrar');
+      debugPrint('SignUp error: $e');
     } finally {
       _isLoading.value = false;
     }
@@ -51,8 +76,6 @@ class AuthController extends GetxController {
   Future<void> signOut() async {
     await _repository.signOut();
     user.value = null;
-    Get.off(LoginPage());
+    Get.off(() => LoginPage());
   }
-
-  bool get isLoggedIn => user.value != null;
 }

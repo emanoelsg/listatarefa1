@@ -6,6 +6,7 @@ import 'package:listatarefa1/app/features/auth/data/auth_repository_impl.dart';
 import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
 import 'package:listatarefa1/app/features/auth/presentation/login_page.dart';
 import 'package:listatarefa1/app/features/tasks/data/task_repository_impl.dart';
+import 'package:listatarefa1/app/features/tasks/domain/task_repository.dart';
 import 'package:listatarefa1/app/features/tasks/presentation/task_controller.dart';
 import 'package:listatarefa1/app/features/tasks/presentation/tasks_page.dart';
 import 'package:get/get.dart';
@@ -19,14 +20,15 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  Get.put(AuthController(repository: AuthRepositoryImpl()));
-  Get.put(TaskController(repository: TaskRepositoryImpl()));
+  final taskRepository = TaskRepositoryImpl();
+  final authRepository = AuthRepositoryImpl();
+
+  Get.put<TaskRepository>(taskRepository);
+  Get.put<TaskController>(TaskController(repository: taskRepository));
+  Get.put<AuthController>(AuthController(repository: authRepository));
 
   final user = FirebaseAuth.instance.currentUser;
-
-  if (user != null) {
-    Get.put<String>(user.uid, tag: 'userId');
-  }
+  Get.put<String>(user?.uid ?? 'user123', tag: 'userId');
 
   runApp(const ListTarefa());
 }
@@ -39,6 +41,7 @@ class ListTarefa extends StatefulWidget {
 }
 
 class _ListTarefa extends State<ListTarefa> {
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(

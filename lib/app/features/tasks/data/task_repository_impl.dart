@@ -18,25 +18,17 @@ class TaskRepositoryImpl implements TaskRepository {
         .get();
 
     return snapshot.docs
-        .map((doc) => TaskEntity(
-              id: doc.id,
-              title: doc['title'],
-              isDone: doc['isDone'] ?? false,
-              userId: userId,
-              createdAt: doc['createdAt'] != null
-                  ? DateTime.tryParse(doc['createdAt']) ?? DateTime.now()
-                  : DateTime.now(),
-            ))
+        .map((doc) => TaskEntity.fromMap(doc.data(), doc.id)) 
         .toList();
   }
 
   @override
   Future<void> addTask(String userId, TaskEntity task) async {
-    await _firestore.collection('users').doc(userId).collection('tasks').add({
-      'title': task.title,
-      'isDone': task.isDone,
-      'createdAt': task.createdAt.toIso8601String(),
-    });
+    await _firestore
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
+        .add(task.toMap());
   }
 
   @override
@@ -46,10 +38,7 @@ class TaskRepositoryImpl implements TaskRepository {
         .doc(userId)
         .collection('tasks')
         .doc(task.id)
-        .update({
-      'title': task.title,
-      'isDone': task.isDone,
-    });
+        .update(task.toMap()); 
   }
 
   @override

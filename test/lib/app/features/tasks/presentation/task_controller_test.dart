@@ -40,7 +40,7 @@ void main() {
     when(() => mockRepository.getTasks(userId))
         .thenAnswer((_) async => [sampleTask]);
 
-    await controller.addTask(userId, 'Test Task');
+    await controller.addTask(userId, 'Test Task', '');
 
     verify(() => mockRepository.addTask(userId, any())).called(1);
     expect(controller.tasks.length, 1);

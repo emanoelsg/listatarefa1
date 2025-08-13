@@ -1,4 +1,5 @@
-// app/features/auth/presentation/auth_controller.dart
+// app/features/auth/presentation/controller/auth_controller.dart
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
@@ -15,12 +16,21 @@ class AuthController extends GetxController {
     this.onError,
   }) : _repository = repository;
 
-  final Rxn<UserEntity> user = Rxn<UserEntity>();
+  final Rxn<UserEntity> person = Rxn<UserEntity>();
   final RxBool _isLoading = false.obs;
 
   bool get isLoading => _isLoading.value;
-  bool get isLoggedIn => user.value != null;
-
+  bool get isLoggedIn => person.value != null;
+    final Rx<User?> _user = Rx<User?>(null);
+  User? get user => _user.value;
+ @override
+  void onInit() {
+  
+    FirebaseAuth.instance.authStateChanges().listen((User? firebaseUser) {
+      _user.value = firebaseUser;
+    });
+    super.onInit();
+  }
   void _showError(String message) {
     if (Get.testMode && onError != null) {
       onError!("Erro", message);
@@ -42,7 +52,7 @@ class AuthController extends GetxController {
     try {
       final result = await _repository.signIn(email, password);
       if (result != null) {
-        user.value = result;
+        person.value = result;
         Get.off(() => HomePage());
       } else {
         _showError('Credenciais inválidas');
@@ -60,7 +70,7 @@ class AuthController extends GetxController {
     try {
       final result = await _repository.signUp(name, email, password);
       if (result != null) {
-        user.value = UserEntity(id: result.id, email: result.email, name: name);
+        person.value = UserEntity(id: result.id, email: result.email, name: name);
         Get.off(() => HomePage());
       } else {
         _showError('Falha ao registrar usuário');
@@ -75,7 +85,7 @@ class AuthController extends GetxController {
 
   Future<void> signOut() async {
     await _repository.signOut();
-    user.value = null;
+    person.value = null;
     Get.off(() => LoginPage());
   }
 }

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'task_controller.dart';
-import '../../../utils/constants/colors.dart'; // ajuste conforme seu path
+import '../../../utils/constants/colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: TColors.primaryBackground,
       appBar: AppBar(
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               'Aviso',
               message,
               snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: TColors.secondary,
+              backgroundColor: TColors.error, 
               colorText: TColors.textWhite,
               margin: const EdgeInsets.all(12),
               borderRadius: 8,

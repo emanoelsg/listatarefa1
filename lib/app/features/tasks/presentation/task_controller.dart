@@ -1,4 +1,5 @@
 // app/features/tasks/presentation/task_controller.dart
+
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import '../domain/task_entity.dart';
@@ -14,30 +15,32 @@ class TaskController extends GetxController {
   final isLoading = false.obs;
   final message = RxnString();
 
+
   Future<void> loadTasks(String userId) async {
     try {
       isLoading.value = true;
       tasks.value = await _repository.getTasks(userId);
     } catch (e) {
-      message.value = 'Erro ao carregar tarefas';
+      message.value = 'Erro ao carregar tarefas $e';
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> addTask(String userId, String title) async {
+  Future<void> addTask(String userId, String title,String description) async {
     final task = TaskEntity(
       id: const Uuid().v4(),
       title: title,
       userId: userId,
       createdAt: DateTime.now(),
+      description: description
     );
     try {
       await _repository.addTask(userId, task);
       await loadTasks(userId);
       message.value = 'Tarefa adicionada com sucesso';
     } catch (e) {
-      message.value = 'Erro ao adicionar tarefa';
+      message.value = 'Erro ao adicionar tarefa $e';
     }
   }
 

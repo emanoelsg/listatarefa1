@@ -32,7 +32,7 @@ void main() {
 
       await controller.signUp('Selma', 'selma@email.com', 'senha123');
 
-      expect(controller.user.value, equals(mockUser));
+      expect(controller.person.value, equals(mockUser));
       expect(controller.isLoading, isFalse);
     });
 
@@ -42,7 +42,7 @@ void main() {
 
       await controller.signUp('Selma', 'selma@email.com', 'senha123');
 
-      expect(controller.user.value, isNull);
+      expect(controller.person.value, isNull);
       expect(controller.isLoading, isFalse);
     });
 
@@ -52,7 +52,7 @@ void main() {
 
       await controller.loginWithEmail('selma@email.com', 'senha123');
 
-      expect(controller.user.value, equals(mockUser));
+      expect(controller.person.value, equals(mockUser));
       expect(controller.isLoading, isFalse);
     });
 
@@ -62,18 +62,18 @@ void main() {
 
       await controller.loginWithEmail('selma@email.com', 'senha123');
 
-      expect(controller.user.value, isNull);
+      expect(controller.person.value, isNull);
       expect(controller.isLoading, isFalse);
     });
 
     test('signOut limpa user', () async {
-      controller.user.value = mockUser;
+      controller.person.value = mockUser;
 
       when(() => mockRepository.signOut()).thenAnswer((_) async {});
 
       await controller.signOut();
 
-      expect(controller.user.value, isNull);
+      expect(controller.person.value, isNull);
     });
 
     test('isLoading reflete estado corretamente', () async {

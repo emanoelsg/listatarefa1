@@ -7,6 +7,7 @@ class TaskEntity {
   final bool isDone;
   final String userId;
   final DateTime createdAt;
+  final String? description;
 
   TaskEntity({
     required this.id,
@@ -14,15 +15,17 @@ class TaskEntity {
     required this.userId,
     required this.createdAt,
     this.isDone = false,
+    this.description,
   });
 
   factory TaskEntity.fromMap(Map<String, dynamic> map, String docId) {
     return TaskEntity(
       id: docId,
       title: map['title'] as String,
-      isDone: map['isDone'] as bool,
+      isDone: map['isDone'] as bool? ?? false,
       userId: map['userId'] as String,
       createdAt: (map['createdAt'] as Timestamp).toDate(),
+      description: map['description'] as String?,
     );
   }
 
@@ -32,6 +35,7 @@ class TaskEntity {
       'isDone': isDone,
       'userId': userId,
       'createdAt': createdAt,
+      if (description != null) 'description': description,
     };
   }
 
@@ -41,6 +45,7 @@ class TaskEntity {
     bool? isDone,
     String? userId,
     DateTime? createdAt,
+    String? description,
   }) {
     return TaskEntity(
       id: id ?? this.id,
@@ -48,6 +53,7 @@ class TaskEntity {
       isDone: isDone ?? this.isDone,
       userId: userId ?? this.userId,
       createdAt: createdAt ?? this.createdAt,
+      description: description ?? this.description,
     );
   }
 }

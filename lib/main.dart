@@ -26,20 +26,15 @@ Future<void> main() async {
   Get.put<TaskController>(TaskController(repository: taskRepository));
   Get.put<AuthController>(AuthController(repository: authRepository));
 
-   final user = FirebaseAuth.instance.currentUser;
-   Get.put<String>(user?.uid ?? 'user123', tag: 'userId');
 
-  runApp(const ListTarefa());
+
+  runApp( ListTarefa());
 }
 
-class ListTarefa extends StatefulWidget {
+class ListTarefa extends StatelessWidget {
   const ListTarefa({super.key});
 
-  @override
-  State<ListTarefa> createState() => _ListTarefa();
-}
 
-class _ListTarefa extends State<ListTarefa> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -47,9 +42,19 @@ class _ListTarefa extends State<ListTarefa> {
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        home: FirebaseAuth.instance.currentUser != null
-            ? const HomePage()
-            : const LoginPage(),
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+           if (snapshot.hasData) {
+              return const HomePage();
+            }
+            return const LoginPage();
+          },
+        ),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

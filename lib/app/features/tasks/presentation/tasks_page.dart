@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await controller.addTask(userId, 'Nova tarefa');
+//TODO: Implementar a tela de adicionar tarefas
         },
         backgroundColor: TColors.accent,
         child: const Icon(Icons.add, color: TColors.textWhite),

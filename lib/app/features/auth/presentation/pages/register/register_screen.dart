@@ -1,10 +1,10 @@
-// app/features/auth/presentation/register_screen.dart
+// app/features/auth/presentation/pages/register/register_screen.dart
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/register/form_container.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/register/register_header.dart';
-import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/register/register_widgets/form_container.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/register/register_widgets/register_header.dart';
+import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

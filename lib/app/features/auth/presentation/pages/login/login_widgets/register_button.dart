@@ -1,6 +1,6 @@
-// app/common/widgets/login_signup/login/register_button.dart
+// app/features/auth/presentation/pages/login/login_widgets/register_button.dart
 import 'package:flutter/material.dart';
-import '../../../../features/auth/presentation/auth_controller.dart';
+import '../../../controller/auth_controller.dart';
 
 class RegisterButton extends StatelessWidget {
   const RegisterButton({

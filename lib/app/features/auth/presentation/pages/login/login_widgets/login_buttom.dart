@@ -1,8 +1,8 @@
-// app/common/widgets/login_signup/login/login_buttom.dart
+// app/features/auth/presentation/pages/login/login_widgets/login_buttom.dart
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
+import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
 
 class LoginButtom extends StatelessWidget {
   const LoginButtom({

@@ -1,3 +1,4 @@
+// app/utils/constants/colors.dart
 import 'package:flutter/material.dart';
 
 class TColors {
@@ -24,7 +25,7 @@ class TColors {
   static Color darkContainer = TColors.white.withOpacity(0.1);
 
   // Button colors
-  static const Color buttonPrimary = Color(0xFF4b68ff);
+  static const Color buttonPrimary = Colors.purple;
   static const Color buttonSecondary = Color(0xFF6C757D);
   static const Color buttonDisabled = Color(0xFFC4C4C4);
 
@@ -36,7 +37,7 @@ class TColors {
   static const Color error = Color(0xFFD32F2F);
   static const Color success = Color(0xFF388E3C);
   static const Color warning = Color(0xFFF57C00);
-  static const Color info = Color(0xFF1976D2);
+  static const Color info = Colors.yellow;
 
   // Neutral Shades
   static const Color black = Color(0xFF232323);

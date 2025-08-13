@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
-import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
+import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 

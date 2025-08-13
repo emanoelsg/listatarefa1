@@ -1,14 +1,14 @@
-// app/common/widgets/login_signup/register/form_container.dart
+// app/features/auth/presentation/pages/register/register_widgets/form_container.dart
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/login/register_button.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/register/sign_up_form.dart';
-import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
-import 'package:listatarefa1/app/features/auth/presentation/login_page.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/register_button.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/register/register_widgets/sign_up_form.dart';
+import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_page.dart';
 import 'package:listatarefa1/app/utils/constants/sizes.dart';
 import 'package:listatarefa1/app/utils/helpers/helper_functions.dart';
-import '../form_divider.dart';
+import '../../../../../../common/widgets/login_signup/form_divider.dart';
 
 class BuildFormContainer extends StatelessWidget {
   const BuildFormContainer({

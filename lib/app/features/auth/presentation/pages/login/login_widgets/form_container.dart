@@ -1,11 +1,11 @@
-// app/common/widgets/login_signup/login/form_container.dart
+// app/features/auth/presentation/pages/login/login_widgets/form_container.dart
 
 import 'package:flutter/material.dart';
 import 'package:listatarefa1/app/common/widgets/login_signup/form_divider.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/login/login_buttom.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/login/login_form.dart';
-import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
-import 'package:listatarefa1/app/features/auth/presentation/register_screen.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/login_buttom.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/login_form.dart';
+import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/register/register_screen.dart';
 import 'package:listatarefa1/app/utils/constants/sizes.dart';
 import 'package:listatarefa1/app/utils/helpers/helper_functions.dart';
 

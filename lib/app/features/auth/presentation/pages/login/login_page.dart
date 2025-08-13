@@ -1,9 +1,9 @@
-// app/features/auth/presentation/login_page.dart
+// app/features/auth/presentation/pages/login/login_page.dart
 
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/login/form_container.dart';
-import 'package:listatarefa1/app/features/auth/presentation/auth_controller.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/form_container.dart';
+import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

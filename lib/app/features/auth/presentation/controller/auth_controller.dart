@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
-import 'package:listatarefa1/app/features/auth/presentation/login_page.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_page.dart';
 import 'package:listatarefa1/app/features/tasks/presentation/tasks_page.dart';
 
 class AuthController extends GetxController {

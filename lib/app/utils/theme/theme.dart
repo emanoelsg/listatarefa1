@@ -28,12 +28,12 @@ class TAppTheme {
     primaryColor: TColors.primary,
     scaffoldBackgroundColor: TColors.dark,
     appBarTheme: AppBarTheme(
-      backgroundColor: TColors.dark,
+      backgroundColor: TColors.primary,
       foregroundColor: TColors.textWhite,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: TColors.primary,
+        backgroundColor: TColors.buttonPrimary,
         foregroundColor: TColors.textWhite,
       ),
     ),

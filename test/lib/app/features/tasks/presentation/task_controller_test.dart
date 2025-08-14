@@ -5,15 +5,12 @@ import 'package:listatarefa1/app/features/tasks/domain/task_repository.dart';
 import 'package:listatarefa1/app/features/tasks/presentation/task_controller.dart';
 import 'package:mocktail/mocktail.dart';
 
-
 class MockTaskRepository extends Mock implements TaskRepository {}
 
 class FakeTaskEntity extends Fake implements TaskEntity {}
 
-
 void main() {
-   TestWidgetsFlutterBinding.ensureInitialized();
-
+  TestWidgetsFlutterBinding.ensureInitialized();
 
   late TaskController controller;
   late MockTaskRepository mockRepository;
@@ -47,7 +44,6 @@ void main() {
     expect(controller.tasks.first.title, 'Test Task');
   });
 
-
   test('loadTasks should fetch tasks and update state', () async {
     when(() => mockRepository.getTasks(userId))
         .thenAnswer((_) async => [sampleTask]);
@@ -58,8 +54,6 @@ void main() {
     expect(controller.tasks.first.title, 'Test Task');
     expect(controller.isLoading.value, false);
   });
-
- 
 
   test('updateTask should modify task in list', () async {
     controller.tasks.value = [sampleTask];

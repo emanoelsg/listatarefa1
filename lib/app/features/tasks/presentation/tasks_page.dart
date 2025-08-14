@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: TColors.primaryBackground,
       appBar: AppBar(
@@ -49,7 +48,7 @@ class _HomePageState extends State<HomePage> {
               'Aviso',
               message,
               snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: TColors.error, 
+              backgroundColor: TColors.error,
               colorText: TColors.textWhite,
               margin: const EdgeInsets.all(12),
               borderRadius: 8,
@@ -59,7 +58,8 @@ class _HomePageState extends State<HomePage> {
         }
 
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: TColors.primary));
+          return const Center(
+              child: CircularProgressIndicator(color: TColors.primary));
         }
 
         if (controller.tasks.isEmpty) {
@@ -104,11 +104,13 @@ class _HomePageState extends State<HomePage> {
                     style: TextStyle(
                       color: TColors.textPrimary,
                       fontWeight: FontWeight.w500,
-                      decoration: task.isDone ? TextDecoration.lineThrough : null,
+                      decoration:
+                          task.isDone ? TextDecoration.lineThrough : null,
                     ),
                   ),
                   trailing: IconButton(
-                    icon: const Icon(Icons.delete_outline, color: TColors.iconPrimary),
+                    icon: const Icon(Icons.delete_outline,
+                        color: TColors.iconPrimary),
                     onPressed: () {
                       controller.deleteTask(userId, task.id);
                     },

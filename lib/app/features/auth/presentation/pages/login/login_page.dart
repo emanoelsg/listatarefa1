@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
-import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/form_container.dart';
 import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/login_form.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,17 +14,14 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final authController = Get.find<AuthController>();
-
   final _formKey = GlobalKey<FormState>();
-  // Login Controllers
-  final _loginEmailController = TextEditingController();
-  final _loginPasswordController = TextEditingController();
-  bool isLoading = false;
+  final _emailCtrl = TextEditingController();
+  final _passCtrl = TextEditingController();
 
   @override
   void dispose() {
-    _loginEmailController.dispose();
-    _loginPasswordController.dispose();
+    _emailCtrl.dispose();
+    _passCtrl.dispose();
     super.dispose();
   }
 
@@ -72,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-                FormContainer(
-                  formKey: _formKey,
-                  loginEmailController: _loginEmailController,
-                  loginPasswordController: _loginPasswordController,
+                LoginFormContainer(
                   authController: authController,
+                  formKey: _formKey,
+                  emailController: _emailCtrl,
+                  passwordController: _passCtrl,
                 ),
               ],
             ),

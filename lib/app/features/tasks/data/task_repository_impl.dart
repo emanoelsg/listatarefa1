@@ -18,7 +18,7 @@ class TaskRepositoryImpl implements TaskRepository {
         .get();
 
     return snapshot.docs
-        .map((doc) => TaskEntity.fromMap(doc.data(), doc.id)) 
+        .map((doc) => TaskEntity.fromMap(doc.data(), doc.id))
         .toList();
   }
 
@@ -38,7 +38,7 @@ class TaskRepositoryImpl implements TaskRepository {
         .doc(userId)
         .collection('tasks')
         .doc(task.id)
-        .update(task.toMap()); 
+        .update(task.toMap());
   }
 
   @override

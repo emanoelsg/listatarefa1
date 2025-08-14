@@ -21,16 +21,16 @@ class AuthController extends GetxController {
 
   bool get isLoading => _isLoading.value;
   bool get isLoggedIn => person.value != null;
-    final Rx<User?> _user = Rx<User?>(null);
+  final Rx<User?> _user = Rx<User?>(null);
   User? get user => _user.value;
- @override
+  @override
   void onInit() {
-  
     FirebaseAuth.instance.authStateChanges().listen((User? firebaseUser) {
       _user.value = firebaseUser;
     });
     super.onInit();
   }
+
   void _showError(String message) {
     if (Get.testMode && onError != null) {
       onError!("Erro", message);
@@ -70,7 +70,8 @@ class AuthController extends GetxController {
     try {
       final result = await _repository.signUp(name, email, password);
       if (result != null) {
-        person.value = UserEntity(id: result.id, email: result.email, name: name);
+        person.value =
+            UserEntity(id: result.id, email: result.email, name: name);
         Get.off(() => HomePage());
       } else {
         _showError('Falha ao registrar usuário');

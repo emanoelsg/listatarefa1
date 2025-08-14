@@ -24,6 +24,7 @@ dependencies:
   uuid: ^4.5.1
   fake_cloud_firestore: ^4.0.0
   firebase_core_platform_interface: ^6.0.0
+  firebase_auth_mocks: ^0.15.0
  # flutter_local_notifications: ^19.4.0  uso futuro
 
 dev_dependencies:

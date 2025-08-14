@@ -15,7 +15,6 @@ class TaskController extends GetxController {
   final isLoading = false.obs;
   final message = RxnString();
 
-
   Future<void> loadTasks(String userId) async {
     try {
       isLoading.value = true;
@@ -27,14 +26,13 @@ class TaskController extends GetxController {
     }
   }
 
-  Future<void> addTask(String userId, String title,String description) async {
+  Future<void> addTask(String userId, String title, String description) async {
     final task = TaskEntity(
-      id: const Uuid().v4(),
-      title: title,
-      userId: userId,
-      createdAt: DateTime.now(),
-      description: description
-    );
+        id: const Uuid().v4(),
+        title: title,
+        userId: userId,
+        createdAt: DateTime.now(),
+        description: description);
     try {
       await _repository.addTask(userId, task);
       await loadTasks(userId);

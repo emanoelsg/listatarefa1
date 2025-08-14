@@ -26,14 +26,11 @@ Future<void> main() async {
   Get.put<TaskController>(TaskController(repository: taskRepository));
   Get.put<AuthController>(AuthController(repository: authRepository));
 
-
-
-  runApp( ListTarefa());
+  runApp(ListTarefa());
 }
 
 class ListTarefa extends StatelessWidget {
   const ListTarefa({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +45,7 @@ class ListTarefa extends StatelessWidget {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
-           if (snapshot.hasData) {
+            if (snapshot.hasData) {
               return const HomePage();
             }
             return const LoginPage();

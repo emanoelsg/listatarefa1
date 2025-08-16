@@ -1,6 +1,6 @@
 // app/utils/theme/theme.dart
 import 'package:flutter/material.dart';
-import '../constants/colors.dart';
+import 'package:listatarefa1/app/utils/constants/colors.dart';
 
 class TAppTheme {
   TAppTheme._();
@@ -9,15 +9,28 @@ class TAppTheme {
     useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: TColors.primary,
-    scaffoldBackgroundColor: TColors.light,
-    appBarTheme: AppBarTheme(
+    scaffoldBackgroundColor: TColors.primaryBackground,
+    appBarTheme: const AppBarTheme(
       backgroundColor: TColors.primary,
       foregroundColor: TColors.textWhite,
+      elevation: 2,
+    ),
+    textTheme: const TextTheme(
+      bodyMedium: TextStyle(color: TColors.textPrimary),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: TColors.primary,
+        backgroundColor: TColors.buttonPrimary,
         foregroundColor: TColors.textWhite,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    ),
+    cardTheme: CardThemeData(
+      color: TColors.lightContainer,
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(color: TColors.borderPrimary),
       ),
     ),
   );
@@ -27,14 +40,27 @@ class TAppTheme {
     brightness: Brightness.dark,
     primaryColor: TColors.primary,
     scaffoldBackgroundColor: TColors.dark,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       backgroundColor: TColors.primary,
       foregroundColor: TColors.textWhite,
+      elevation: 2,
+    ),
+    textTheme: const TextTheme(
+      bodyMedium: TextStyle(color: TColors.textWhite),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: TColors.buttonPrimary,
+        backgroundColor: TColors.buttonSecondary,
         foregroundColor: TColors.textWhite,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    ),
+    cardTheme: CardThemeData(
+      color: TColors.darkContainer,
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(color: TColors.borderSecondary),
       ),
     ),
   );

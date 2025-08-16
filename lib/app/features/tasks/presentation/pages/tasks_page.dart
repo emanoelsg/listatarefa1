@@ -1,11 +1,14 @@
-// app/features/tasks/presentation/tasks_page.dart
+// app/features/tasks/presentation/pages/tasks_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'task_controller.dart';
-import '../../../utils/constants/colors.dart';
+import 'package:listatarefa1/app/features/tasks/presentation/controller/task_controller.dart';
+import 'package:listatarefa1/app/features/tasks/presentation/pages/addtask_page.dart';
+import 'package:listatarefa1/app/utils/constants/colors.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final String userId;
+
+  const HomePage({super.key, required this.userId});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,23 +22,24 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     controller = Get.find<TaskController>();
-    userId = Get.find<String>(tag: 'userId');
+    // userId = Get.arguments as String;
+    userId = widget.userId;
     controller.loadTasks(userId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: TColors.primaryBackground,
+     // backgroundColor: TColors.primaryBackground,
       appBar: AppBar(
         title: const Text('Lista de Tarefas'),
         centerTitle: true,
         backgroundColor: TColors.primary,
-        foregroundColor: TColors.textWhite,
+       // foregroundColor: TColors.textWhite,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-//TODO: Implementar a tela de adicionar tarefas
+        onPressed: () {
+Get.to(() => AddTaskPage(), arguments: userId);
         },
         backgroundColor: TColors.accent,
         child: const Icon(Icons.add, color: TColors.textWhite),
@@ -68,7 +72,7 @@ class _HomePageState extends State<HomePage> {
               'Nenhuma tarefa encontrada',
               style: TextStyle(
                 fontSize: 16,
-                color: TColors.textSecondary,
+               // color: TColors.textSecondary,
               ),
             ),
           );
@@ -82,13 +86,16 @@ class _HomePageState extends State<HomePage> {
               final task = controller.tasks[index];
               return Card(
                 elevation: 2,
-                color: TColors.lightContainer,
+              //  color: TColors.lightContainer,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
-                  side: const BorderSide(color: TColors.borderPrimary),
+                 // side: const BorderSide(color: TColors.borderPrimary),
                 ),
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
+                  onLongPress: () {
+     Get.to(() => AddTaskPage(existingTask: task), arguments: userId);
+                  },
                   leading: Checkbox(
                     value: task.isDone,
                     activeColor: TColors.primary,
@@ -102,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                   title: Text(
                     task.title,
                     style: TextStyle(
-                      color: TColors.textPrimary,
+                     // color: TColors.textPrimary,
                       fontWeight: FontWeight.w500,
                       decoration:
                           task.isDone ? TextDecoration.lineThrough : null,

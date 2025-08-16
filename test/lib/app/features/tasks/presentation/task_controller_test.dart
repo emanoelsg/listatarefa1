@@ -2,7 +2,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:listatarefa1/app/features/tasks/domain/task_entity.dart';
 import 'package:listatarefa1/app/features/tasks/domain/task_repository.dart';
-import 'package:listatarefa1/app/features/tasks/presentation/task_controller.dart';
+import 'package:listatarefa1/app/features/tasks/presentation/controller/task_controller.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockTaskRepository extends Mock implements TaskRepository {}

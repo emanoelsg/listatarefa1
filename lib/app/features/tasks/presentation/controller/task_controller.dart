@@ -1,9 +1,9 @@
-// app/features/tasks/presentation/task_controller.dart
+// app/features/tasks/presentation/controller/task_controller.dart
 
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
-import '../domain/task_entity.dart';
-import '../domain/task_repository.dart';
+import '../../domain/task_entity.dart';
+import '../../domain/task_repository.dart';
 
 class TaskController extends GetxController {
   final TaskRepository _repository;

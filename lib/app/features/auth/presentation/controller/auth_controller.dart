@@ -1,11 +1,12 @@
 // app/features/auth/presentation/controller/auth_controller.dart
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
 import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_page.dart';
-import 'package:listatarefa1/app/features/tasks/presentation/tasks_page.dart';
+import 'package:listatarefa1/app/features/tasks/presentation/pages/tasks_page.dart';
 
 class AuthController extends GetxController {
   final AuthRepository _repository;
@@ -20,73 +21,91 @@ class AuthController extends GetxController {
   final RxBool _isLoading = false.obs;
 
   bool get isLoading => _isLoading.value;
+  set isLoading(bool value) => _isLoading.value = value;
+
   bool get isLoggedIn => person.value != null;
+
   final Rx<User?> _user = Rx<User?>(null);
   User? get user => _user.value;
-  @override
-  void onInit() {
-    FirebaseAuth.instance.authStateChanges().listen((User? firebaseUser) {
-      _user.value = firebaseUser;
+
+ @override
+void onInit() {
+  super.onInit();
+
+  FirebaseAuth.instance.authStateChanges().listen((User? firebaseUser) {
+    _user.value = firebaseUser;
+
+    if (firebaseUser != null) {
+      Get.offAll(() => HomePage(userId: firebaseUser.uid));
+    } else {
+      Get.offAll(() => const LoginPage());
+    }
+  });
+}
+
+Future<void> signUp(String name, String email, String password) async {
+  try {
+    isLoading = true;
+
+    final credential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password);
+
+    final userId = credential.user?.uid;
+    if (userId == null) throw Exception('Erro ao obter ID do usuário');
+
+    await FirebaseFirestore.instance.collection('users').doc(userId).set({
+      'name': name,
+      'email': email,
+      'createdAt': FieldValue.serverTimestamp(),
     });
-    super.onInit();
-  }
 
-  void _showError(String message) {
-    if (Get.testMode && onError != null) {
-      onError!("Erro", message);
-      return;
+    person.value = UserEntity(id: userId, email: email, name: name);
+
+    Get.offAll(() => HomePage(userId: userId));
+  } catch (e) {
+    final errorMessage = e is FirebaseAuthException
+        ? e.message ?? 'Erro desconhecido'
+        : e.toString();
+    _showError(errorMessage);
+  } finally {
+    isLoading = false;
+  }
+}
+
+Future<void> loginWithEmail(String email, String password) async {
+  isLoading = true;
+  try {
+    final result = await _repository.signIn(email, password);
+    if (result != null) {
+      person.value = result;
+      Get.offAll(() => HomePage(userId: result.id));
+    } else {
+      _showError('Credenciais inválidas');
     }
-
-    Get.snackbar(
-      'Erro',
-      message,
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.redAccent,
-      colorText: Colors.white,
-      duration: Duration(seconds: 3),
-    );
+  } catch (e) {
+    _showError('Falha ao fazer login');
+    debugPrint('Login error: $e');
+  } finally {
+    isLoading = false;
   }
-
-  Future<void> loginWithEmail(String email, String password) async {
-    _isLoading.value = true;
-    try {
-      final result = await _repository.signIn(email, password);
-      if (result != null) {
-        person.value = result;
-        Get.off(() => HomePage());
-      } else {
-        _showError('Credenciais inválidas');
-      }
-    } catch (e) {
-      _showError('Falha ao fazer login');
-      debugPrint('Login error: $e');
-    } finally {
-      _isLoading.value = false;
-    }
-  }
-
-  Future<void> signUp(String name, String email, String password) async {
-    _isLoading.value = true;
-    try {
-      final result = await _repository.signUp(name, email, password);
-      if (result != null) {
-        person.value =
-            UserEntity(id: result.id, email: result.email, name: name);
-        Get.off(() => HomePage());
-      } else {
-        _showError('Falha ao registrar usuário');
-      }
-    } catch (e) {
-      _showError('Erro inesperado ao registrar');
-      debugPrint('SignUp error: $e');
-    } finally {
-      _isLoading.value = false;
-    }
-  }
-
-  Future<void> signOut() async {
+}  Future<void> signOut() async {
     await _repository.signOut();
     person.value = null;
-    Get.off(() => LoginPage());
+    Get.off(() => const LoginPage());
   }
+  void _showError(String message) {
+  if (Get.testMode && onError != null) {
+    onError!("Erro", message);
+    return;
+  }
+
+  Get.snackbar(
+    'Erro',
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: Colors.redAccent,
+    colorText: Colors.white,
+    duration: const Duration(seconds: 3),
+  );
+}
 }

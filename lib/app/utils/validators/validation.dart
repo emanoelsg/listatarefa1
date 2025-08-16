@@ -86,6 +86,14 @@ class TValidator {
     return null;
   }
 
+  static String? validateMaxLength(String? value, int max,
+      {String? fieldName}) {
+    if (value != null && value.length > max) {
+      return '${fieldName ?? 'Campo'} não pode ter mais de $max caracteres.';
+    }
+    return null;
+  }
+
   /// Phone Number Validation
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {

@@ -1,12 +1,11 @@
-// app/features/auth/presentation/pages/register/register_widgets/form_container.dart
+// app/features/auth/presentation/pages/register/register_form/form_container.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
 import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_page.dart';
 import 'package:listatarefa1/app/utils/constants/sizes.dart';
-import 'package:listatarefa1/app/utils/helpers/helper_functions.dart';
 import 'package:listatarefa1/app/utils/validators/validation.dart';
-import 'package:listatarefa1/app/common/widgets/login_signup/form_divider.dart';
+import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/form_divider.dart';
 
 class RegisterFormContainer extends StatelessWidget {
   final AuthController authController;
@@ -110,12 +109,7 @@ class RegisterFormContainer extends StatelessWidget {
               children: [
                 const Text('Already have an account?'),
                 TextButton(
-                  onPressed: () {
-                    THelperFunctions.navigateToScreen(
-                      context,
-                      const LoginPage(),
-                    );
-                  },
+                  onPressed: () => Get.to(() => const LoginPage()),
                   child: const Text('Login'),
                 ),
               ],
@@ -127,31 +121,36 @@ class RegisterFormContainer extends StatelessWidget {
   }
 
   Widget _buildRegisterButton() {
-    final isLoading = authController.isLoading is RxBool
-        ? (authController.isLoading as RxBool).value
-        : authController.isLoading;
-
-    if (isLoading) {
-      return const CircularProgressIndicator(color: Colors.deepPurple);
-    }
+    final isLoading = authController.isLoading;
 
     return ElevatedButton(
       key: const Key('register_button'),
+      onPressed: isLoading
+          ? null
+          : () {
+              if (formKey.currentState?.validate() ?? false) {
+                authController.signUp(
+                  nameController.text.trim(),
+                  emailController.text.trim(),
+                  passwordController.text,
+                );
+              }
+            },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurple,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         minimumSize: const Size.fromHeight(48),
       ),
-      onPressed: () {
-        if (formKey.currentState?.validate() ?? false) {
-          authController.signUp(
-            nameController.text.trim(),
-            emailController.text.trim(),
-            passwordController.text,
-          );
-        }
-      },
-      child: const Text('Register'),
+      child: isLoading
+          ? const SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: Colors.white,
+              ),
+            )
+          : const Text('Register'),
     );
   }
 }

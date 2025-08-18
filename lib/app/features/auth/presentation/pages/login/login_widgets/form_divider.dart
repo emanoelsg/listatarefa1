@@ -1,7 +1,8 @@
+// app/features/auth/presentation/pages/login/login_widgets/form_divider.dart
 import 'package:flutter/material.dart';
 
-import '../../../utils/constants/colors.dart';
-import '../../../utils/helpers/helper_functions.dart';
+import '../../../../../../utils/constants/colors.dart';
+import '../../../../../../utils/helpers/helper_functions.dart';
 
 class TFormDivider extends StatelessWidget {
   const TFormDivider({super.key, required this.dividerText});

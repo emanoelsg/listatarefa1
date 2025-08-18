@@ -61,6 +61,7 @@ class TRoundedContainer extends StatelessWidget {
           boxShadow: [
             if (showShadow)
               BoxShadow(
+                // ignore: deprecated_member_use
                 color: TColors.grey.withOpacity(0.1),
                 spreadRadius: 5,
                 blurRadius: 8,

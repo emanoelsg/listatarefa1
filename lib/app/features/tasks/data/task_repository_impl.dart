@@ -28,7 +28,8 @@ class TaskRepositoryImpl implements TaskRepository {
         .collection('users')
         .doc(userId)
         .collection('tasks')
-        .add(task.toMap());
+        .doc(task.id)
+        .set(task.toMap());
   }
 
   @override

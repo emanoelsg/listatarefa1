@@ -8,6 +8,7 @@ class TaskEntity {
   final String userId;
   final DateTime createdAt;
   final String? description;
+  final DateTime? reminderAt;
 
   TaskEntity({
     required this.id,
@@ -16,6 +17,7 @@ class TaskEntity {
     required this.createdAt,
     this.isDone = false,
     this.description,
+    this.reminderAt,
   });
 
   factory TaskEntity.fromMap(Map<String, dynamic> map, String docId) {
@@ -26,6 +28,9 @@ class TaskEntity {
       userId: map['userId'] as String,
       createdAt: (map['createdAt'] as Timestamp).toDate(),
       description: map['description'] as String?,
+      reminderAt: map['reminderAt'] != null
+          ? (map['reminderAt'] as Timestamp).toDate()
+          : null,
     );
   }
 
@@ -36,6 +41,7 @@ class TaskEntity {
       'userId': userId,
       'createdAt': createdAt,
       if (description != null) 'description': description,
+      if (reminderAt != null) 'reminderAt': reminderAt,
     };
   }
 

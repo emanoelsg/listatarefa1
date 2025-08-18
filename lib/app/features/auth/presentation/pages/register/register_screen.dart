@@ -47,6 +47,32 @@ class _RegisterPageState extends State<RegisterPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //Title
+                        Text(
+                          'Register',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.headlineLarge!.apply(color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.01,
+                        ),
+
+                        Text(
+                          'Create your account',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.headlineSmall!.apply(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: screenHeight * 0.07),
                   RegisterFormContainer(
                     authController: authController,

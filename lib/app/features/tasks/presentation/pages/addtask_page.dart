@@ -1,5 +1,4 @@
 // app/features/tasks/presentation/pages/addtask_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/tasks/domain/task_entity.dart';
@@ -17,8 +16,7 @@ class AddTaskPage extends StatefulWidget {
   State<AddTaskPage> createState() => _AddTaskPageState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage>
-    with TickerProviderStateMixin {
+class _AddTaskPageState extends State<AddTaskPage> with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -44,8 +42,7 @@ class _AddTaskPageState extends State<AddTaskPage>
       vsync: this,
       duration: const Duration(milliseconds: 300),
     );
-    fadeAnimation =
-        CurvedAnimation(parent: fadeController, curve: Curves.easeInOut);
+    fadeAnimation = CurvedAnimation(parent: fadeController, curve: Curves.easeInOut);
     fadeController.forward();
   }
 
@@ -71,15 +68,14 @@ class _AddTaskPageState extends State<AddTaskPage>
       await controller.updateTask(userId, updatedTask);
     } else {
       final newTask = TaskEntity(
-        id: widget.existingTask?.id ?? const Uuid().v4(),
+        id: const Uuid().v4(),
         title: title,
         description: description,
         userId: userId,
         createdAt: DateTime.now(),
         isDone: false,
       );
-      await controller.addTask(
-          userId, newTask.title, newTask.description ?? '');
+      await controller.addTask(userId, newTask.title, newTask.description ?? '');
     }
 
     Get.back();
@@ -117,8 +113,7 @@ class _AddTaskPageState extends State<AddTaskPage>
                   ),
                   validator: (value) {
                     return TValidator.validateEmptyText('Título', value) ??
-                        TValidator.validateMaxLength(value, 50,
-                            fieldName: 'Título');
+                        TValidator.validateMaxLength(value, 50, fieldName: 'Título');
                   },
                 ),
                 const SizedBox(height: 16),
@@ -136,8 +131,8 @@ class _AddTaskPageState extends State<AddTaskPage>
                     ),
                   ),
                   maxLines: 3,
-                  validator: (value) => TValidator.validateMaxLength(value, 200,
-                      fieldName: 'Descrição'),
+                  validator: (value) =>
+                      TValidator.validateMaxLength(value, 200, fieldName: 'Descrição'),
                 ),
                 const Spacer(),
                 SizedBox(
@@ -145,8 +140,7 @@ class _AddTaskPageState extends State<AddTaskPage>
                   child: ElevatedButton.icon(
                     onPressed: _submit,
                     icon: Icon(isEditing ? Icons.save : Icons.check),
-                    label:
-                        Text(isEditing ? 'Salvar Alterações' : 'Salvar Tarefa'),
+                    label: Text(isEditing ? 'Salvar Alterações' : 'Salvar Tarefa'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: TColors.buttonPrimary,
                       padding: const EdgeInsets.symmetric(vertical: 14),

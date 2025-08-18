@@ -19,13 +19,12 @@ class AuthController extends GetxController {
 
   final Rxn<UserEntity> person = Rxn<UserEntity>();
   final RxBool _isLoading = false.obs;
+  final Rx<User?> _user = Rx<User?>(null);
 
   bool get isLoading => _isLoading.value;
   set isLoading(bool value) => _isLoading.value = value;
 
   bool get isLoggedIn => person.value != null;
-
-  final Rx<User?> _user = Rx<User?>(null);
   User? get user => _user.value;
 
   @override

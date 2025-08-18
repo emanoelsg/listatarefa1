@@ -1,5 +1,4 @@
 // app/features/tasks/presentation/pages/tasks_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:listatarefa1/app/features/tasks/presentation/controller/task_controller.dart';
@@ -23,7 +22,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     controller = Get.find<TaskController>();
-
     userId = widget.userId;
     controller.loadTasks(userId);
   }
@@ -35,6 +33,7 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Lista de Tarefas'),
         centerTitle: true,
         backgroundColor: TColors.primary,
+        foregroundColor: TColors.textWhite,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -62,16 +61,15 @@ class _HomePageState extends State<HomePage> {
 
         if (controller.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: TColors.primary));
+            child: CircularProgressIndicator(color: TColors.primary),
+          );
         }
 
         if (controller.tasks.isEmpty) {
           return const Center(
             child: Text(
               'Nenhuma tarefa encontrada',
-              style: TextStyle(
-                fontSize: 16,
-              ),
+              style: TextStyle(fontSize: 16),
             ),
           );
         }
@@ -90,8 +88,7 @@ class _HomePageState extends State<HomePage> {
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
                   onLongPress: () {
-                    Get.to(() => AddTaskPage(existingTask: task),
-                        arguments: userId);
+                    Get.to(() => AddTaskPage(existingTask: task), arguments: userId);
                   },
                   leading: Checkbox(
                     value: task.isDone,
@@ -107,13 +104,11 @@ class _HomePageState extends State<HomePage> {
                     task.title,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      decoration:
-                          task.isDone ? TextDecoration.lineThrough : null,
+                      decoration: task.isDone ? TextDecoration.lineThrough : null,
                     ),
                   ),
                   trailing: IconButton(
-                    icon: const Icon(Icons.delete_outline,
-                        color: TColors.iconPrimary),
+                    icon: const Icon(Icons.delete_outline, color: TColors.iconPrimary),
                     onPressed: () {
                       controller.deleteTask(userId, task.id);
                     },

@@ -42,34 +42,27 @@ class AuthController extends GetxController {
     });
   }
 
+  
   Future<void> signUp(String name, String email, String password) async {
-    try {
-      isLoading = true;
+  try {
+    isLoading = true;
 
-      final credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-
-      final userId = credential.user?.uid;
-      if (userId == null) throw Exception('Erro ao obter ID do usuário');
-
-      await FirebaseFirestore.instance.collection('users').doc(userId).set({
-        'name': name,
-        'email': email,
-        'createdAt': FieldValue.serverTimestamp(),
-      });
-
-      person.value = UserEntity(id: userId, email: email, name: name);
-
-      Get.offAll(() => HomePage(userId: userId));
-    } catch (e) {
-      final errorMessage = e is FirebaseAuthException
-          ? e.message ?? 'Erro desconhecido'
-          : e.toString();
-      _showError(errorMessage);
-    } finally {
-      isLoading = false;
+    final result = await _repository.signUp(name, email, password);
+    if (result != null) {
+      person.value = result;
+      Get.offAll(() => HomePage(userId: result.id));
+    } else {
+      _showError('Falha ao criar conta');
     }
+  } catch (e) {
+    final errorMessage = e is FirebaseAuthException
+        ? e.message ?? 'Erro desconhecido'
+        : e.toString();
+    _showError(errorMessage);
+  } finally {
+    isLoading = false;
   }
+}
 
   Future<void> loginWithEmail(String email, String password) async {
     isLoading = true;

@@ -1,9 +1,7 @@
 // test/lib/app/features/auth/presentation/auth_controller_test.dart
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
-import 'package:listatarefa1/firebase_options.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
@@ -11,9 +9,8 @@ import 'package:listatarefa1/app/features/auth/presentation/controller/auth_cont
 
 class MockAuthRepository extends Mock implements AuthRepository {}
 
-Future<void> main() async {
+void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   late AuthController controller;
   late MockAuthRepository mockRepository;

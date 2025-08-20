@@ -1,5 +1,5 @@
 // app/features/auth/presentation/controller/auth_controller.dart
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,27 +42,26 @@ class AuthController extends GetxController {
     });
   }
 
-  
   Future<void> signUp(String name, String email, String password) async {
-  try {
-    isLoading = true;
+    try {
+      isLoading = true;
 
-    final result = await _repository.signUp(name, email, password);
-    if (result != null) {
-      person.value = result;
-      Get.offAll(() => HomePage(userId: result.id));
-    } else {
-      _showError('Falha ao criar conta');
+      final result = await _repository.signUp(name, email, password);
+      if (result != null) {
+        person.value = result;
+        Get.offAll(() => HomePage(userId: result.id));
+      } else {
+        _showError('Falha ao criar conta');
+      }
+    } catch (e) {
+      final errorMessage = e is FirebaseAuthException
+          ? e.message ?? 'Erro desconhecido'
+          : e.toString();
+      _showError(errorMessage);
+    } finally {
+      isLoading = false;
     }
-  } catch (e) {
-    final errorMessage = e is FirebaseAuthException
-        ? e.message ?? 'Erro desconhecido'
-        : e.toString();
-    _showError(errorMessage);
-  } finally {
-    isLoading = false;
   }
-}
 
   Future<void> loginWithEmail(String email, String password) async {
     isLoading = true;

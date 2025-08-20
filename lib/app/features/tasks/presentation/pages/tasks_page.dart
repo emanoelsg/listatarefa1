@@ -88,7 +88,8 @@ class _HomePageState extends State<HomePage> {
                 margin: const EdgeInsets.symmetric(vertical: 8),
                 child: ListTile(
                   onLongPress: () {
-                    Get.to(() => AddTaskPage(existingTask: task), arguments: userId);
+                    Get.to(() => AddTaskPage(existingTask: task),
+                        arguments: userId);
                   },
                   leading: Checkbox(
                     value: task.isDone,
@@ -104,11 +105,13 @@ class _HomePageState extends State<HomePage> {
                     task.title,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      decoration: task.isDone ? TextDecoration.lineThrough : null,
+                      decoration:
+                          task.isDone ? TextDecoration.lineThrough : null,
                     ),
                   ),
                   trailing: IconButton(
-                    icon: const Icon(Icons.delete_outline, color: TColors.iconPrimary),
+                    icon: const Icon(Icons.delete_outline,
+                        color: TColors.iconPrimary),
                     onPressed: () {
                       controller.deleteTask(userId, task.id);
                     },

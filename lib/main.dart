@@ -11,7 +11,6 @@ import 'package:listatarefa1/app/features/auth/presentation/controller/auth_cont
 import 'package:listatarefa1/app/features/notifications/controller/notification_controller.dart';
 import 'package:listatarefa1/app/features/notifications/service/notifications_service.dart';
 import 'package:listatarefa1/app/features/tasks/data/task_repository_impl.dart';
-import 'package:listatarefa1/app/features/tasks/domain/task_repository.dart';
 import 'package:listatarefa1/app/features/tasks/presentation/controller/task_controller.dart';
 import 'package:listatarefa1/app/utils/theme/theme.dart';
 
@@ -24,18 +23,16 @@ Future<void> main() async {
 
   tz.initializeTimeZones();
 
-  // Repositories
+  // Serviços e repositórios
   final taskRepository = TaskRepositoryImpl();
   final authRepository = AuthRepositoryImpl();
   final notificationService = NotificationService();
-
-  // Controllers
-  Get.put<TaskRepository>(taskRepository);
-  Get.put<TaskController>(TaskController(repository: taskRepository));
-  Get.put<AuthController>(AuthController(repository: authRepository));
-  Get.put<NotificationController>(NotificationController(service: notificationService));
-
   await notificationService.init();
+
+  // Controllers (injeção centralizada)
+  Get.put(TaskController(repository: taskRepository));
+  Get.put(AuthController(repository: authRepository));
+  Get.put(NotificationController(service: notificationService));
 
   runApp(const ListTarefa());
 }

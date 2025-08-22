@@ -88,8 +88,9 @@ class NotificationService {
     final now = tz.TZDateTime.now(tz.local);
     var scheduled =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
-    if (scheduled.isBefore(now))
+    if (scheduled.isBefore(now)) {
       scheduled = scheduled.add(const Duration(days: 1));
+    }
     return scheduled;
   }
 
@@ -98,8 +99,9 @@ class NotificationService {
     while (scheduled.weekday != weekday) {
       scheduled = scheduled.add(const Duration(days: 1));
     }
-    if (scheduled.isBefore(tz.TZDateTime.now(tz.local)))
+    if (scheduled.isBefore(tz.TZDateTime.now(tz.local))) {
       scheduled = scheduled.add(const Duration(days: 7));
+    }
     return scheduled;
   }
 }

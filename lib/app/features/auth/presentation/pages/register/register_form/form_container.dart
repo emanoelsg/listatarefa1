@@ -1,11 +1,11 @@
 // app/features/auth/presentation/pages/register/register_form/form_container.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:listatarefa1/app/common/widgets/form_divider.dart';
 import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
 import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_page.dart';
 import 'package:listatarefa1/app/utils/constants/sizes.dart';
 import 'package:listatarefa1/app/utils/validators/validation.dart';
-import 'package:listatarefa1/app/features/auth/presentation/pages/login/login_widgets/form_divider.dart';
 
 class RegisterFormContainer extends StatelessWidget {
   final AuthController authController;

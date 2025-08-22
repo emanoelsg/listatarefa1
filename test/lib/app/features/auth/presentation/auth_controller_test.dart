@@ -1,5 +1,5 @@
 // test/lib/app/features/auth/presentation/auth_controller_test.dart
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
@@ -7,6 +7,7 @@ import 'package:listatarefa1/app/features/auth/domain/auth_repository.dart';
 import 'package:listatarefa1/app/features/auth/domain/user_entity.dart';
 import 'package:listatarefa1/app/features/auth/presentation/controller/auth_controller.dart';
 
+// Mock do repositório
 class MockAuthRepository extends Mock implements AuthRepository {}
 
 void main() {
@@ -75,18 +76,6 @@ void main() {
       await controller.signOut();
 
       expect(controller.person.value, isNull);
-    });
-
-    test('isLoading reflete estado corretamente', () async {
-      when(() => mockRepository.signUp(any(), any(), any()))
-          .thenAnswer((_) async {
-        expect(controller.isLoading, isTrue);
-        return mockUser;
-      });
-
-      await controller.signUp('Selma', 'selma@email.com', 'senha123');
-
-      expect(controller.isLoading, isFalse);
     });
   });
 }

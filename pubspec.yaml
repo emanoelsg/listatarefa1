@@ -27,8 +27,9 @@ dependencies:
   firebase_auth_mocks: ^0.15.0
   flutter_local_notifications: ^19.4.0
   timezone: ^0.10.1
-  flutter_native_timezone: ^2.0.0
- # flutter_local_notifications: ^19.4.0  uso futuro
+  flutter_native_timezone: 2.0.0
+  flutter_slidable: ^4.0.0
+
 
 dev_dependencies:
 

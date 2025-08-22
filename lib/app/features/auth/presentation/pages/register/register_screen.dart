@@ -51,12 +51,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 SizedBox(height: screenHeight * 0.07),
                 Text(
                   'Register',
-                  style: theme.textTheme.headlineLarge?.copyWith(color: Colors.white),
+                  style: theme.textTheme.headlineLarge
+                      ?.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.01),
                 Text(
                   'Create your account',
-                  style: theme.textTheme.headlineSmall?.copyWith(color: Colors.white),
+                  style: theme.textTheme.headlineSmall
+                      ?.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: screenHeight * 0.07),
                 RegisterFormContainer(

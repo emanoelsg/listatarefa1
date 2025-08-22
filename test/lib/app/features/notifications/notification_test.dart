@@ -31,7 +31,7 @@ void main() {
     when(() => mockService.scheduleTaskNotification(task))
         .thenAnswer((_) async {});
 
-    await controller.scheduleTaskReminder(task);
+    await controller.scheduleReminderForTask(task);
 
     verify(() => mockService.scheduleTaskNotification(task)).called(1);
   });
@@ -45,7 +45,7 @@ void main() {
       reminderAt: null,
     );
 
-    await controller.scheduleTaskReminder(task);
+    await controller.scheduleReminderForTask(task);
 
     verifyNever(() => mockService.scheduleTaskNotification(task));
   });
@@ -58,7 +58,7 @@ void main() {
     when(() => mockService.cancelNotification(notificationId))
         .thenAnswer((_) async {});
 
-    await controller.cancelNotification(notificationId);
+    await controller.cancelRemindersForTask(notificationId as TaskEntity);
 
     verify(() => mockService.cancelNotification(notificationId)).called(1);
   });

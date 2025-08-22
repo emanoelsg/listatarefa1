@@ -1,31 +1,28 @@
 // app/features/notifications/controller/notification_controller.dart
-import 'package:get/get.dart';
-import '../service/notifications_service.dart';
-import '../../tasks/domain/task_entity.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:listatarefa1/app/features/notifications/service/notifications_service.dart';
+import 'package:listatarefa1/app/features/tasks/domain/task_entity.dart';
 
 class NotificationController extends GetxController {
   final NotificationService service;
 
   NotificationController({required this.service});
+
   @override
   void onInit() {
     super.onInit();
     service.init();
   }
 
-  /// Agenda ou atualiza a notificação da tarefa
-  Future<void> scheduleTaskReminder(TaskEntity task) async {
-    if (task.reminderAt == null) return;
+  Future<void> scheduleReminderForTask(TaskEntity task) async {
     await service.scheduleTaskNotification(task);
   }
 
-  /// Cancela uma notificação pelo ID
-  Future<void> cancelNotification(int id) async {
+  Future<void> cancelReminder(int id) async {
     await service.cancelNotification(id);
   }
 
-  /// Cancela todas as notificações relacionadas a uma tarefa
-  Future<void> cancelAllForTask(TaskEntity task) async {
+  Future<void> cancelRemindersForTask(TaskEntity task) async {
     await service.cancelAllForTask(task);
   }
 }

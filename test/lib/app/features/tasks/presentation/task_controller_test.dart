@@ -52,14 +52,15 @@ void main() {
       return addedTask != null ? [addedTask!] : [];
     });
 
-    when(() => mockNotif.scheduleTaskReminder(any())).thenAnswer((_) async {});
+    when(() => mockNotif.scheduleReminderForTask(any()))
+        .thenAnswer((_) async {});
 
     // Act
     await controller.addTask(userId, 'Test Task', '');
 
     // Assert repository and notification calls
     verify(() => mockRepository.addTask(userId, any())).called(1);
-    verify(() => mockNotif.scheduleTaskReminder(any())).called(1);
+    verify(() => mockNotif.scheduleReminderForTask(any())).called(1);
 
     // Assert that the task list contains the new task
     expect(controller.tasks.length, 1);
@@ -103,11 +104,12 @@ void main() {
 
     when(() => mockRepository.updateTask(userId, updatedTask))
         .thenAnswer((_) async {});
-    when(() => mockNotif.scheduleTaskReminder(any())).thenAnswer((_) async {});
+    when(() => mockNotif.scheduleReminderForTask(any()))
+        .thenAnswer((_) async {});
 
     await controller.updateTask(userId, updatedTask);
 
-    verify(() => mockNotif.scheduleTaskReminder(any())).called(1);
+    verify(() => mockNotif.scheduleReminderForTask(any())).called(1);
     expect(controller.tasks.first.title, 'Updated Task');
   });
 
@@ -123,7 +125,7 @@ void main() {
 
     when(() => mockRepository.deleteTask(userId, sampleTask.id))
         .thenAnswer((_) async {});
-    when(() => mockNotif.cancelNotification(any())).thenAnswer((_) async {});
+    when(() => mockNotif.cancelReminder(any())).thenAnswer((_) async {});
 
     await controller.deleteTask(userId, sampleTask.id);
 
@@ -132,9 +134,9 @@ void main() {
 
     // Verify that notifications were cancelled
     final baseId = sampleTask.id.codeUnits.fold(0, (prev, el) => prev + el);
-    verify(() => mockNotif.cancelNotification(baseId)).called(1);
+    verify(() => mockNotif.cancelReminder(baseId)).called(1);
     for (var wd = 1; wd <= 7; wd++) {
-      verify(() => mockNotif.cancelNotification(baseId + wd)).called(1);
+      verify(() => mockNotif.cancelReminder(baseId + wd)).called(1);
     }
   });
 }

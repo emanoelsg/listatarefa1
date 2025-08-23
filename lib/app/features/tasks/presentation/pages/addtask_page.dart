@@ -1,6 +1,7 @@
 // app/features/tasks/presentation/pages/addtask_page.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:listatarefa1/app/features/notifications/controller/notification_controller.dart';
 import 'package:listatarefa1/app/features/tasks/domain/task_entity.dart';
 import 'package:listatarefa1/app/features/tasks/presentation/controller/task_controller.dart';
 import 'package:listatarefa1/app/utils/constants/colors.dart';
@@ -77,23 +78,32 @@ class _AddTaskPageState extends State<AddTaskPage>
 
     final title = titleController.text.trim();
     final description = descriptionController.text.trim();
-
-    final repeatType = frequency == TaskFrequency.daily ? 'daily' : 'weekly';
-    final weekDays =
+    final repeatTypeStr = frequency == TaskFrequency.daily ? 'daily' : 'weekly';
+    final weekDaysList =
         frequency == TaskFrequency.weekly ? selectedWeekDays : null;
     final reminderStr = reminderTime != null
         ? '${reminderTime!.hour.toString().padLeft(2, '0')}:${reminderTime!.minute.toString().padLeft(2, '0')}'
         : null;
 
+    final notificationController = Get.find<NotificationController>();
+
     if (isEditing) {
       final updatedTask = widget.existingTask!.copyWith(
         title: title,
         description: description,
-        repeatType: repeatType,
-        weekDays: weekDays,
+        repeatType: repeatTypeStr,
+        weekDays: weekDaysList,
         reminderTime: reminderStr,
       );
+
       await controller.updateTask(userId, updatedTask);
+
+      // Cancelar notificações antigas e agendar novas
+      if (updatedTask.reminderTime != null ||
+          updatedTask.repeatType != 'none') {
+        await notificationController.cancelRemindersForTask(updatedTask);
+        await notificationController.scheduleReminderForTask(updatedTask);
+      }
     } else {
       final newTask = TaskEntity(
         id: const Uuid().v4(),
@@ -101,12 +111,18 @@ class _AddTaskPageState extends State<AddTaskPage>
         description: description,
         userId: userId,
         createdAt: DateTime.now(),
-        repeatType: repeatType,
-        weekDays: weekDays,
+        repeatType: repeatTypeStr,
+        weekDays: weekDaysList,
         reminderTime: reminderStr,
       );
+
       await controller.addTask(
           userId, newTask.title, newTask.description ?? '');
+
+      // Agendar notificação
+      if (reminderStr != null || repeatTypeStr != 'none') {
+        await notificationController.scheduleReminderForTask(newTask);
+      }
     }
 
     Get.back();

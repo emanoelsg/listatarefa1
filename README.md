@@ -53,22 +53,7 @@ O projeto inclui testes unitários robustos, cobrindo:
 
 ---
 
-## 🚀 Estrutura do Projeto
-
-lib/ 
-├─ app/
-│   ├─ features/ 
-│   │   ├─ auth/ 
-│   │   │   ├─ data/ 
-│   │   │   ├─ domain/ 
-│   │   │   └─ presentation/ 
-│   │   ├─ tasks/ 
-│   │   │   ├─ data/ 
-│   │   │   ├─ domain/ 
-│   │   │   └─ presentation/ 
-│   │   └─ notifications/ 
-│   │       ├─ controller/ 
-│   │       └─ service/
+## 🚀 Estrutura do Prjeto
 
 - **Data** – Implementações de repositório e integração com Firebase.  
 - **Domain** – Entidades e interfaces (abstração do repositório).  
